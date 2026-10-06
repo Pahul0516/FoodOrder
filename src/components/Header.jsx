@@ -2,12 +2,17 @@ import logo from './../assets/logo.jpg'
 import {useContext, useState} from "react";
 import {CartContext} from "./../store/cart-context.jsx";
 import Modal from "./Modal.jsx";
+import Cart from "./Cart.jsx";
 
 export function Header() {
 
 
-    const {countMeals} = useContext(CartContext)
+    const {meals} = useContext(CartContext)
     const [openModal, setOpenModal] = useState(false)
+    const totalCartMeals = meals.reduce( (total, meal) => {
+        return total + meal.quantity
+    }, 0)
+
 
     function onClose(){
         setOpenModal(false)
@@ -16,10 +21,7 @@ export function Header() {
     return (
         <>
             <Modal open={openModal} onClose={onClose}>
-                <button type='button' onClick={onClose}>
-                    Close
-                </button>
-                <p> aici se afiseaza cart-ul</p>
+                <Cart onClose={onClose}/>
             </Modal>
             <div id='main-header'>
                 <div id='title'>
@@ -30,7 +32,7 @@ export function Header() {
                     className="text-button"
                     onClick={() => {setOpenModal(true)}}
                 >
-                    Cart({countMeals})
+                    Cart({totalCartMeals})
                 </button>
             </div>
         </>

@@ -19,6 +19,7 @@ export default function Meals() {
             {meals.map((meal) => (
                 <MealItem
                     key={meal.id}
+                    id={meal.id}
                     title={meal.name}
                     image={meal.image}
                     description={meal.description}

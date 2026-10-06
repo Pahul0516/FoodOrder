@@ -1,9 +1,20 @@
 import {useContext} from "react";
 import {CartContext} from "../store/cart-context.jsx";
+import {formatCurrency} from "../utils/formatter.js";
 
-export default function MealItem({title, description, image, price}) {
+export default function MealItem({id, title, description, image, price}) {
 
-    const {setCountMeals} = useContext(CartContext)
+    const {meals, addMeal} = useContext(CartContext)
+
+    function handleAddMeal(){
+        addMeal({
+            id: id,
+            title: title,
+            description: description,
+            image: image,
+            price: price
+        });
+    }
 
     return (
        <div className="meal-item">
@@ -11,13 +22,13 @@ export default function MealItem({title, description, image, price}) {
                 <img src={`http://localhost:3000/${image}`} alt="Meal image"/>
                 <div>
                     <h3>{title}</h3>
-                    <p className="meal-item-price">${price}</p>
+                    <p className="meal-item-price">{formatCurrency(price)}</p>
                     <p className="meal-item-description">{description}</p>
                 </div>
                 <p className="meal-item-actions">
                     <button
                         className="button"
-                        onClick={() => { setCountMeals((prevMealCount) => (prevMealCount + 1))}}
+                        onClick={handleAddMeal}
                     >
                         Add to Cart
                     </button>
