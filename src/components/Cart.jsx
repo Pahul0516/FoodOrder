@@ -41,12 +41,15 @@ export default function Cart({onClose, onCheckout}) {
                     Close
                 </button>
 
-                <button
-                    className="button"
-                    onClick = {onCheckout}
-                >
-                    Go to Checkout
-                </button>
+                {meals.length !== 0 && (
+                    <button
+                        className="button"
+                        onClick = {onCheckout}
+                    >
+                        Go to Checkout
+                    </button>
+                )}
+
             </div>
         </div>
     )
