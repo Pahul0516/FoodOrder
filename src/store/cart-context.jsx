@@ -2,6 +2,7 @@ import {createContext, useState} from "react";
 
 export const CartContext = createContext({
     meals: [],
+    clearMeals: () => {},
     addMeal: (meal) => {},
     removeMeal: (meal) => {}
 })
@@ -54,9 +55,14 @@ export function CartContextProvider({children}){
         })
     }
 
+    function clearMeals(){
+        setMeals([])
+    }
+
     const contextValue = {
         meals : meals,
         addMeal: addMeal,
+        clearMeals: clearMeals,
         removeMeal: removeMeal,
 
     }

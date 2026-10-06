@@ -23,6 +23,8 @@ app.get('/meals', async (req, res) => {
 app.post('/orders', async (req, res) => {
   const orderData = req.body.order;
 
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   if (orderData === null || orderData.items === null || orderData.items.length === 0) {
     return res
       .status(400)
@@ -36,7 +38,7 @@ app.post('/orders', async (req, res) => {
     orderData.customer.name.trim() === '' ||
     orderData.customer.street === null ||
     orderData.customer.street.trim() === '' ||
-    orderData.customer['postal-code'] === null ||
+    orderData.customer['postal-code'] === null |
     orderData.customer['postal-code'].trim() === '' ||
     orderData.customer.city === null ||
     orderData.customer.city.trim() === ''

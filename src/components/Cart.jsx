@@ -2,7 +2,7 @@ import {useContext} from "react";
 import {CartContext} from "../store/cart-context.jsx";
 import {formatCurrency} from "../utils/formatter.js";
 
-export default function Cart({onClose}){
+export default function Cart({onClose, onCheckout}) {
 
     const {meals, addMeal, removeMeal} = useContext(CartContext);
     const totalCartPrice = meals.reduce((total, meal) => {
@@ -43,7 +43,7 @@ export default function Cart({onClose}){
 
                 <button
                     className="button"
-                    onClick = {onClose}
+                    onClick = {onCheckout}
                 >
                     Go to Checkout
                 </button>
