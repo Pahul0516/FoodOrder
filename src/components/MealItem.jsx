@@ -1,6 +1,7 @@
 import {useContext} from "react";
 import {CartContext} from "../store/cart-context.jsx";
 import {formatCurrency} from "../utils/formatter.js";
+import {API_URL} from "../config.js";
 
 export default function MealItem({id, title, description, image, price}) {
 
@@ -19,7 +20,7 @@ export default function MealItem({id, title, description, image, price}) {
     return (
        <div className="meal-item">
             <article>
-                <img src={`http://localhost:3000/${image}`} alt="Meal image"/>
+                <img src={`${API_URL}/${image}`} alt="Meal image"/>
                 <div>
                     <h3>{title}</h3>
                     <p className="meal-item-price">{formatCurrency(price)}</p>

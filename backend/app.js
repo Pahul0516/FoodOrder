@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 
 import bodyParser from 'body-parser';
 import express from 'express';
@@ -6,7 +7,7 @@ import express from 'express';
 const app = express();
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static(fileURLToPath(new URL('./public/', import.meta.url))));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,8 +16,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 app.get('/meals', async (req, res) => {
-  const meals = await fs.readFile('./data/available-meals.json', 'utf8');
+  const meals = await fs.readFile(new URL('./data/available-meals.json', import.meta.url), 'utf8');
   res.json(JSON.parse(meals));
 });
 
@@ -53,10 +58,10 @@ app.post('/orders', async (req, res) => {
     ...orderData,
     id: (Math.random() * 1000).toString(),
   };
-  const orders = await fs.readFile('./data/orders.json', 'utf8');
+  const orders = await fs.readFile(new URL('./data/orders.json', import.meta.url), 'utf8');
   const allOrders = JSON.parse(orders);
   allOrders.push(newOrder);
-  await fs.writeFile('./data/orders.json', JSON.stringify(allOrders));
+  await fs.writeFile(new URL('./data/orders.json', import.meta.url), JSON.stringify(allOrders));
   res.status(201).json({ message: 'Order created!' });
 });
 
@@ -68,4 +73,5 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
 });
 
-app.listen(3000);
+const port = process.env.PORT || 3000;
+app.listen(port, '0.0.0.0');

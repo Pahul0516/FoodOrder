@@ -2,6 +2,7 @@ import {formatCurrency} from "../utils/formatter.js";
 import {useContext, useActionState} from "react";
 import {CartContext} from "../store/cart-context.jsx";
 import Submit from "./Submit.jsx";
+import {API_URL} from "../config.js";
 
 export default function Checkout ({onClose, onSuccess}) {
 
@@ -24,7 +25,7 @@ export default function Checkout ({onClose, onSuccess}) {
 
         try{
             console.log(orderData);
-            const response = await fetch("http://localhost:3000/orders", {
+            const response = await fetch(`${API_URL}/orders`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
